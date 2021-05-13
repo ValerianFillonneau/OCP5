@@ -1,3 +1,6 @@
 [submodule "serveur"]
 	path = serveur
 	url = https://github.com/OpenClassrooms-Student-Center/JWDP5.git
+[submodule "OCP5"]
+	path = OCP5
+	url = https://github.com/ValerianFillonneau/OCP5.git
