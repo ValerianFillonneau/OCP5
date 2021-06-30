@@ -83,7 +83,7 @@ function displayTotals() {
                             </li>
                             <li class="oreder-summary-item border-0">
                                 <span>Total TTC</span>
-                                <strong class="order-summary-total">${Math.round(((total + delivery)* 1.2)*100)/100} €</strong>
+                                <strong class="order-summary-total" id="Totals">${Math.round(((total + delivery)* 1.2)*100)/100} €</strong>
                             </li>
                         </ul>
                     </div>
@@ -98,7 +98,7 @@ displayTotals()
 
 //Supprimer un item du panier
 
-function removeitem(i) {
+function removeItem(i) {
     caddy.splice(i,1)
 
     localStorage.setItem("product",JSON.stringify(caddy));
@@ -119,11 +119,20 @@ function emptyArray(){
 
 emptyArray()
 
+/*
+1a- récuperer les données du formulaire
+1b- récuperer les ID des produits du panier
 
+2- afficher les données et ID dans un tableau où ils auront leur propres tableau
+a- afficher les données du formulaire dans un tableau clé-valeur 
+b- afficher les ID dans un tableau de liste ordonnée listant les ID de chaque produit
+
+3- envoyer les 2 différentes données ensemble à l'order dans le body
+*/
 form = document.getElementById("contact")
 
 
-contact.addEventListener('submit', function orderarray(e) {
+contact.addEventListener('submit', function orderArray(e) {
     e.preventDefault();
     let firstName = document.getElementById('firstName').value;
     let lastName = document.getElementById('lastName').value;
@@ -164,19 +173,14 @@ contact.addEventListener('submit', function orderarray(e) {
         })
         .then(function(res) {
             console.log(res)
-            window.location = `checkout.html?orderId=${res.orderId}`
+
+            let price = document.getElementById('Totals').innerHTML
+            
+
+            caddy = localStorage.removeItem("product");
+            window.location = `checkout.html?orderId=${res.orderId}&price=${price}`
         })
     
     }
 )
 
-/*
-1a- récuperer les données du formulaire
-1b- récuperer les ID des produits du panier
-
-2- afficher les données et ID dans un tableau où ils auront leur propres tableau
-a- afficher les données du formulaire dans un tableau clé-valeur 
-b- afficher les ID dans un tableau de liste ordonnée listant les ID de chaque produit
-
-3- envoyer les 2 différentes données ensemble à l'order dans le body
-*/
